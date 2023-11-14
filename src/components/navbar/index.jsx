@@ -20,7 +20,7 @@ const Navbar = () => {
       <div className="flex-1">
         <img src={Logo} alt="Icon-logo" className="w-20 h-20 mr-2" /> 
         <Link to="/" className="btn btn-ghost items-center text-xl">
-          Auction Sphere
+          Auction Spheree
         </Link>
       </div>
       <div className="flex-none">
