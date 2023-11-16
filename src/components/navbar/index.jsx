@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from '@tanstack/react-router';
-import Logo from "../../assets/icon-auction.png"
+import Logo from "../../assets/icon-auction.png";
+
 
 const Navbar = () => {
   // Placeholder for credit information from the API
@@ -24,6 +25,7 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="flex-none">
+      <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
         {/* Credit or Placeholder Dropdown */}
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle">
