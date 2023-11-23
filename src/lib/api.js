@@ -111,6 +111,31 @@ export async function getProfile(userName) {
       throw new Error('Failed to get profile. Please try again later.');
     }
   }
+
+  export async function getListings() {
+    const apiUrl = `${API_URL}/listings`;
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    };
+  
+    try {
+      const response = await fetch(apiUrl, options);
+  
+      if (response.ok) {
+        const listings = await response.json();
+        return listings;
+      } else {
+        throw new Error('Failed to fetch listings. Please try again later.');
+      }
+    } catch (error) {
+      console.error('Error fetching listings:', error);
+      throw new Error('Failed to get listings. Please try again later.');
+    }
+  }
   
   
   function isValidURL(str) {

@@ -15,7 +15,6 @@ const Navbar = () => {
     const fetchUserProfile = async () => {
       try {
         const storedToken = localStorage.getItem("access_token");
-        console.log("storedToken:", storedToken);
 
         if (userId && storedToken) {
           try {
@@ -44,7 +43,6 @@ const Navbar = () => {
   console.log("jwt:", localStorage.getItem("jwt"));
 
   const handleLogout = () => {
-    // Clear the token and navigate to the login page
     localStorage.removeItem("jwt");
     setIsAuthenticated(false);
     navigate("/login");
@@ -93,7 +91,7 @@ const Navbar = () => {
                   </span>
                   <div className="card-actions">
                     <button className="btn btn-primary btn-block">
-                      View credit details
+                      Bid to use credit
                     </button>
                   </div>
                 </>

@@ -2,6 +2,10 @@ import "../App.css";
 import Navbar from "../components/navbar/index";
 import Card from "../components/card";
 import Image from "../assets/H-img.jpg";
+import { getListings } from "../lib/api";
+
+
+
 export default function Homepage() {
   return (
     <>
