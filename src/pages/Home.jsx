@@ -5,10 +5,10 @@ import Image from "../assets/H-img.jpg";
 export default function Homepage() {
   return (
     <>
-      <header>
+      <nav className="glass">
         <Navbar />
-      </header>
-      <img src={Image} alt="" className="w-full h-96 object-cover" />
+      </nav>
+     <img src={Image} alt="" className="w-full h-96 object-cover" />
       <main>
       <Card/>
       </main>

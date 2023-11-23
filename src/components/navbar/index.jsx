@@ -1,31 +1,69 @@
-import React, { useState } from 'react';
-import { Link } from '@tanstack/react-router';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "@tanstack/react-router";
 import Logo from "../../assets/icon-auction.png";
-
+import { getProfile } from "../../lib/api";
 
 const Navbar = () => {
-  // Placeholder for credit information from the API
-  const creditInfo = {
-    // Add your actual credit information here when fetching from API
-    // credits: 100,
-    // currency: 'USD',
+  const userId = localStorage.getItem("user_name");
+  const [user, setUser] = useState(null);
+  const [creditInfo, setCreditInfo] = useState({});
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState("https://placekitten.com/40/40"); // Placeholder avatar URL
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const storedToken = localStorage.getItem("access_token");
+        console.log("storedToken:", storedToken);
+
+        if (userId && storedToken) {
+          try {
+            const profileData = await getProfile(userId, storedToken);
+
+            setUser(profileData);
+            setCreditInfo({ credits: profileData.credits, currency: "USD" });
+            setIsAuthenticated(true);
+
+            if (profileData.avatar) {
+              setAvatarUrl(profileData.avatar);
+            }
+          } catch (error) {
+            console.error("Error fetching user profile:", error.message);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+      }
+    };
+
+    fetchUserProfile();
+  }, [navigate, userId]);
+
+  console.log("user_name:", localStorage.getItem("user_name"));
+  console.log("jwt:", localStorage.getItem("jwt"));
+
+  const handleLogout = () => {
+    // Clear the token and navigate to the login page
+    localStorage.removeItem("jwt");
+    setIsAuthenticated(false);
+    navigate("/login");
   };
-
-  // Placeholder for user authentication state
-  const isAuthenticated = true; // Replace with your actual authentication logic
-
-  const avatarUrl = 'https://placekitten.com/80/80'; // Replace with actual avatar URL
 
   return (
     <div className="navbar bg-base-100">
       <div className="flex-1">
-        <img src={Logo} alt="Icon-logo" className="w-20 h-20 mr-2" /> 
+        <img src={Logo} alt="Icon-logo" className="w-20 h-20 mr-2" />
         <Link to="/" className="btn btn-ghost items-center text-xl">
           Auction Sphere
         </Link>
       </div>
       <div className="flex-none">
-      <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
+        <input
+          type="text"
+          placeholder="Search"
+          className="input input-bordered w-24 md:w-auto"
+        />
         {/* Credit or Placeholder Dropdown */}
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle">
@@ -40,7 +78,9 @@ const Navbar = () => {
                 {/* Add your path data here for the notification icon */}
               </svg>
               {isAuthenticated && (
-                <span className="badge badge-sm indicator-item">{creditInfo.credits || 0}</span>
+                <span className="badge badge-sm indicator-item">
+                  {user.credits}
+                </span>
               )}
             </div>
           </label>
@@ -48,14 +88,19 @@ const Navbar = () => {
             <div className="card-body">
               {isAuthenticated ? (
                 <>
-                  <span className="font-bold text-lg">{creditInfo.credits || 0} Credits</span>
+                  <span className="font-bold text-lg">
+                    {user.credits} Credits
+                  </span>
                   <div className="card-actions">
-                    <button className="btn btn-primary btn-block">View credit details</button>
+                    <button className="btn btn-primary btn-block">
+                      View credit details
+                    </button>
                   </div>
                 </>
               ) : (
-                <span className="text-gray-500">Please log in to view credits</span>
-                
+                <span className="text-gray-500">
+                  Please log in to view credits
+                </span>
               )}
             </div>
           </div>
@@ -66,10 +111,10 @@ const Navbar = () => {
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
               {isAuthenticated ? (
-                <img alt="User Avatar" src={avatarUrl} />
+                <img alt="User Avatar" src={user.avatar} />
               ) : (
                 // Placeholder avatar when not authenticated
-                <img alt="Placeholder Avatar" src="https://placekitten.com/40/40" />
+                <img alt="Placeholder Avatar" src={avatarUrl} />
               )}
             </div>
           </label>
@@ -86,7 +131,13 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link to="/login">Log in</Link>
+              {isAuthenticated ? (
+                <button className="btn btn-secondary" onClick={handleLogout}>
+                  Log Out
+                </button>
+              ) : (
+                <Link to="/login">Log in</Link>
+              )}
             </li>
           </ul>
         </div>

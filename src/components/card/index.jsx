@@ -6,7 +6,7 @@ export default function Card() {
          <div className="card-container m-20 flex items-center justify-center">
           <div className="flex flex-wrap">
             <div className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 p-2 m-5">
-              <div className="card glass transform hover:scale-105 transition-transform duration-300">
+              <div className="card glass ">
                 <figure>
                   <img
                     src={someImage}
@@ -20,14 +20,14 @@ export default function Card() {
                     Learn how to efficiently park your car in your garage.
                   </p>
                   <div className="card-actions justify-end">
-                    <button className="btn btn-primary">Bid</button>
+                    <button className="btn btn-primary transform hover:scale-105 transition-transform duration-300">Bid</button>
                   </div>
                 </div>
               </div>
             </div>     
 
             <div className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 p-2 m-5">
-              <div className="card glass transform hover:scale-105 transition-transform duration-300">
+              <div className="card glass ">
                 <figure>
                   <img
                     src={someImage}
@@ -41,14 +41,14 @@ export default function Card() {
                     Learn how to efficiently park your car in your garage.
                   </p>
                   <div className="card-actions justify-end">
-                    <button className="btn btn-primary">Bid</button>
+                    <button className="btn btn-primary transform hover:scale-105 transition-transform duration-300">Bid</button>
                   </div>
                 </div>
               </div>
             </div> 
 
             <div className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 p-2 m-5">
-              <div className="card glass transform hover:scale-105 transition-transform duration-300">
+              <div className="card glass">
                 <figure>
                   <img
                     src={someImage}
@@ -62,7 +62,7 @@ export default function Card() {
                     Learn how to efficiently park your car in your garage.
                   </p>
                   <div className="card-actions justify-end">
-                    <button className="btn btn-primary">Bid</button>
+                    <button className="btn btn-primary  transform hover:scale-105 transition-transform duration-300">Bid</button>
                   </div>
                 </div>
               </div>
