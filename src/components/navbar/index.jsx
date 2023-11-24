@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import Logo from "../../assets/icon-auction.png";
 import { getProfile } from "../../lib/api";
+import { CiCreditCard1 } from "react-icons/ci";
+import { FaHome } from "react-icons/fa";
 
 const Navbar = () => {
   const userId = localStorage.getItem("user_name");
@@ -43,7 +45,7 @@ const Navbar = () => {
   console.log("jwt:", localStorage.getItem("jwt"));
 
   const handleLogout = () => {
-    localStorage.removeItem("jwt");
+    localStorage.removeItem("access_token");
     setIsAuthenticated(false);
     navigate("/login");
   };
@@ -53,7 +55,7 @@ const Navbar = () => {
       <div className="flex-1">
         <img src={Logo} alt="Icon-logo" className="w-20 h-20 mr-2" />
         <Link to="/" className="btn btn-ghost items-center text-xl">
-          Auction Sphere
+          Auction Sphere<FaHome />
         </Link>
       </div>
       <div className="flex-none">
@@ -73,10 +75,9 @@ const Navbar = () => {
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
-                {/* Add your path data here for the notification icon */}
               </svg>
               {isAuthenticated && (
-                <span className="badge badge-sm indicator-item">
+                <span className="badge badge-sm indicator-item"><CiCreditCard1 />
                   {user.credits}
                 </span>
               )}
@@ -105,7 +106,7 @@ const Navbar = () => {
         </div>
 
         {/* Avatar or Placeholder Dropdown */}
-        <div className="dropdown dropdown-end">
+        <div className="dropdown dropdown-end avatar online">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
               {isAuthenticated ? (
