@@ -113,7 +113,7 @@ export async function getProfile(userName) {
   }
 
   export async function getListings() {
-    const apiUrl = `${API_URL}/listings`;
+    const apiUrl = `${API_URL}/listings?sort=created&sortOrder=desc`;
     const options = {
       method: 'GET',
       headers: {
@@ -136,6 +136,29 @@ export async function getProfile(userName) {
       throw new Error('Failed to get listings. Please try again later.');
     }
   }
+
+  export async function placeBid(listingId, amount) {
+    const apiUrl = `${API_URL}/listings/${listingId}/bids`;
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+      body: JSON.stringify({
+        amount: amount,
+      }),
+    };
+  
+    try {
+      const data = await fetcher(apiUrl, options);
+      return data;
+    } catch (error) {
+      console.error("Error placing bid:", error);
+      throw new Error("Failed to place bid. Please try again later.");
+    }
+  }
+  
   
   
   function isValidURL(str) {
@@ -149,7 +172,4 @@ export async function getProfile(userName) {
 
 export function logoutUser() {
   localStorage.removeItem('access_token');
-  localStorage.removeItem('user_name');
-  localStorage.removeItem('credits');
-  localStorage.removeItem('avatar');
 }

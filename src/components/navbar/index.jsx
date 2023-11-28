@@ -64,6 +64,7 @@ const Navbar = () => {
           placeholder="Search"
           className="input input-bordered w-24 md:w-auto"
         />
+        
         {/* Credit or Placeholder Dropdown */}
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle">
