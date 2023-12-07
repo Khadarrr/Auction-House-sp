@@ -112,13 +112,13 @@ export async function getProfile(userName) {
     }
   }
 
-  export async function getListings() {
-    const apiUrl = `${API_URL}/listings?sort=created&sortOrder=desc`;
+  export async function getListings(searchInput) {
+    const apiUrl = `${API_URL}/listings?_tag=${searchInput}&_active=true&sort=created&sortOrder=desc`;
     const options = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
       },
     };
   
@@ -136,6 +136,7 @@ export async function getProfile(userName) {
       throw new Error('Failed to get listings. Please try again later.');
     }
   }
+  
 
   export async function placeBid(listingId, amount) {
     const apiUrl = `${API_URL}/listings/${listingId}/bids`;
@@ -158,6 +159,110 @@ export async function getProfile(userName) {
       throw new Error("Failed to place bid. Please try again later.");
     }
   }
+
+  export async function getUserProfile(userName) {
+    const apiUrl = `${API_URL}/profiles/${userName}`;
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    };
+  
+    try {
+      const response = await fetch(apiUrl, options);
+  
+      if (response.ok) {
+        const userProfile = await response.json();
+        return userProfile;
+      } else {
+        throw new Error('Failed to fetch user profile. Please try again later.');
+      }
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+      throw new Error('Failed to get user profile. Please try again later.');
+    }
+  }
+  
+  export async function updateUserAvatar(userName, avatarUrl) {
+    const apiUrl = `${API_URL}/profiles/${userName}/media`;
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+      body: JSON.stringify({
+        avatar: avatarUrl,
+      }),
+    };
+  
+    try {
+      const response = await fetch(apiUrl, options);
+  
+      if (response.ok) {
+        const updatedProfile = await response.json();
+        return updatedProfile;
+      } else {
+        throw new Error('Failed to update user avatar. Please try again later.');
+      }
+    } catch (error) {
+      console.error('Error updating user avatar:', error);
+      throw new Error('Failed to update user avatar. Please try again later.');
+    }
+  }
+  
+  export async function getUserListings(userName) {
+    const apiUrl = `${API_URL}/profiles/${userName}/listings`;
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    };
+  
+    try {
+      const response = await fetch(apiUrl, options);
+  
+      if (response.ok) {
+        const userlistings = await response.json();
+        return userlistings;
+      } else {
+        throw new Error('Failed to fetch user listings. Please try again later.');
+      }
+    } catch (error) {
+      console.error('Error fetching user listings:', error);
+      throw new Error('Failed to get user listings. Please try again later.');
+    }
+  }
+  
+  export async function getUserBids(userName) {
+    const apiUrl = `${API_URL}/profiles/${userName}/bids`;
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    };
+  
+    try {
+      const response = await fetch(apiUrl, options);
+  
+      if (response.ok) {
+        const userBids = await response.json();
+        return userBids;
+      } else {
+        throw new Error('Failed to fetch user bids. Please try again later.');
+      }
+    } catch (error) {
+      console.error('Error fetching user bids:', error);
+      throw new Error('Failed to get user bids. Please try again later.');
+    }
+  }
+  
   
   
   

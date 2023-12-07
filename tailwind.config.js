@@ -11,6 +11,6 @@ export default {
     
   ],
   daisyui: {
-    themes: ["business","cmyk", "cupcake"],
+    themes: ["cupcake", "business","cmyk",],
   },
 };

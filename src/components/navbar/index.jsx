@@ -4,6 +4,7 @@ import Logo from "../../assets/icon-auction.png";
 import { getProfile } from "../../lib/api";
 import { CiCreditCard1 } from "react-icons/ci";
 import { FaHome } from "react-icons/fa";
+import CreateAuction from "../create-post";
 
 const Navbar = () => {
   const userId = localStorage.getItem("user_name");
@@ -12,6 +13,7 @@ const Navbar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState("https://placekitten.com/40/40"); // Placeholder avatar URL
   const navigate = useNavigate();
+  const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -23,7 +25,7 @@ const Navbar = () => {
             const profileData = await getProfile(userId, storedToken);
 
             setUser(profileData);
-            setCreditInfo({ credits: profileData.credits, currency: "USD" });
+            setCreditInfo({ credits: profileData.credits, currency: "NOK" });
             setIsAuthenticated(true);
 
             if (profileData.avatar) {
@@ -41,9 +43,6 @@ const Navbar = () => {
     fetchUserProfile();
   }, [navigate, userId]);
 
-  console.log("user_name:", localStorage.getItem("user_name"));
-  console.log("jwt:", localStorage.getItem("jwt"));
-
   const handleLogout = () => {
     localStorage.removeItem("access_token");
     setIsAuthenticated(false);
@@ -55,17 +54,19 @@ const Navbar = () => {
       <div className="flex-1">
         <img src={Logo} alt="Icon-logo" className="w-20 h-20 mr-2" />
         <Link to="/" className="btn btn-ghost items-center text-xl">
-          Auction Sphere<FaHome />
+          Auction Sphere
+          <FaHome />
         </Link>
       </div>
       <div className="flex-none">
-        <input
+      <input
           type="text"
           placeholder="Search"
           className="input input-bordered w-24 md:w-auto"
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
         />
-        
-        {/* Credit or Placeholder Dropdown */}
+
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle">
             <div className="indicator">
@@ -75,10 +76,10 @@ const Navbar = () => {
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-              >
-              </svg>
+              ></svg>
               {isAuthenticated && (
-                <span className="badge badge-sm indicator-item"><CiCreditCard1 />
+                <span className="badge badge-sm indicator-item">
+                  <CiCreditCard1 />
                   {user.credits}
                 </span>
               )}
@@ -92,8 +93,12 @@ const Navbar = () => {
                     {user.credits} Credits
                   </span>
                   <div className="card-actions">
-                    <button className="btn btn-primary btn-block">
+                    <Link to="/listings"><button className="btn btn-primary btn-block">
                       Bid to use credit
+                    </button>
+                    </Link>
+                    <button className="btn btn-secondary">
+                      <CreateAuction/>
                     </button>
                   </div>
                 </>
@@ -132,7 +137,7 @@ const Navbar = () => {
             </li>
             <li>
               {isAuthenticated ? (
-                <button className="btn btn-secondary" onClick={handleLogout}>
+                <button className=" btn-secondary" onClick={handleLogout}>
                   Log Out
                 </button>
               ) : (

@@ -3,9 +3,8 @@ import { getListings, placeBid } from "../../lib/api";
 import { RiAuctionFill } from "react-icons/ri";
 import Skeleton from "../loading-skeleton";
 
-// ... (your existing imports)
 
-const Card = () => {
+const Card = ({ searchInput }) => {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -16,18 +15,20 @@ const Card = () => {
   useEffect(() => {
     const fetchListings = async () => {
       try {
-        const listingsData = await getListings();
+        const listingsData = await getListings(searchInput);
         setListings(listingsData);
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching listings:", error.message);
-        setError("Failed to fetch listings. Please try again later.");
+        console.error('Error fetching listings:', error.message);
+        setError('Failed to fetch listings. Please try again later.');
         setLoading(false);
       }
     };
 
     fetchListings();
-  }, []);
+  }, [searchInput]);
+    
+  
 
   const handleBid = async (listingId) => {
     try {
@@ -35,23 +36,20 @@ const Card = () => {
 
       // Check if the user is logged in
       if (!accessToken) {
-        // Redirect to the login page or show an error message
-        console.error("User is not logged in. Please log in to place a bid.");
-        // You can redirect to the login page or show an error message to the user
+        // Alert the user and return
+        window.alert("You must be logged in to place a bid.");
         return;
       }
 
-      // If the selected item is the same as the current one, toggle off the bid input
       if (selectedItemId === listingId) {
         setSelectedItemId(null);
         setIsFinalBid(false);
       } else {
-        // Otherwise, toggle on the bid input for the current item
+
         setSelectedItemId(listingId);
         setIsFinalBid(true);
       }
 
-      // If there's a bid amount and it's the final bid, place the bid
       if (bidAmount.trim() !== "" && isFinalBid) {
         const parsedBidAmount = parseFloat(bidAmount);
         if (isNaN(parsedBidAmount) || parsedBidAmount <= 0) {
@@ -76,7 +74,7 @@ const Card = () => {
   };
 
   return (
-    <div className="card-container mx-10 my-5 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+    <div className="card-container mx-10 my-5 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
       {loading ? (
         <Skeleton />
       ) : error ? (
@@ -97,30 +95,17 @@ const Card = () => {
               <h2 className="card-title text-xl font-semibold mb-2">
                 {listing.title}
               </h2>
-              <p className="card-text text-gray-700 mb-4">
+              <p className="card-text text-gray-700 mb-4" style={{ overflow: 'hidden', maxHeight: '100px' }}>
                 {listing.description}
               </p>
-              <div className="seller-info mb-4">
-                {listing.seller ? (
-                  <>
-                    <p>Seller: {listing.seller.name || "Unknown"}</p>
-                    <img
-                      src={listing.seller.avatar}
-                      alt={`Avatar of ${listing.seller.name || "Unknown"}`}
-                      className="w-8 h-8 rounded-full"
-                    />
-                  </>
-                ) : (
-                  <p>Seller information not available</p>
-                )}
-              </div>
+      
               <div className="indicator">
                 <span className="indicator-item badge badge-secondary bg-green-500">
                   {listing._count?.bids || 0}
                 </span>
                 <button className="btn ">Bids</button>
               </div>
-              <div className="digital-clock text-white p-2 rounded">
+              <div className="digital-clock p-2 rounded">
                 <p className="font-mono text-lg">{listing.endsAt}</p>
               </div>
               <div className="card-actions flex justify-end mt-4">
