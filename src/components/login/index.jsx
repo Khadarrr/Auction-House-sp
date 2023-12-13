@@ -49,11 +49,11 @@ export default function LoginPage() {
   return (
     <>
       <div className="flex items-center justify-center min-h-screen card glass">
-        <div className="p-8 bg-white dark:bg-gray-800 rounded-lg shadow-md w-full sm:w-96 ">
+        <div className="p-8 glass rounded-lg shadow-md w-full sm:w-96 ">
           <div className="flex items-center justify-center">
             <img className="h-20 mb-4" src={logo} alt="Logo" />
           </div>
-          <h1 className="mb-6 text-2xl text-center font-bold dark:text-white">
+          <h1 className="mb-6 text-2xl text-center font-bold ">
             Log in
           </h1>
           <form onSubmit={handleOnSubmit}>
@@ -62,7 +62,7 @@ export default function LoginPage() {
             <div className="mb-4">
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700 dark:text-white"
+                className="block text-sm font-medium text-gray-700 "
               >
                 Email address
               </label>
@@ -74,13 +74,13 @@ export default function LoginPage() {
                 placeholder="Email"
                 autoComplete="email"
                 defaultValue="@stud.noroff.no"
-                className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none  "
               />
             </div>
             <div className="mb-4">
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-700 dark:text-white"
+                className="block text-sm font-medium text-gray-700 "
               >
                 Password
               </label>
@@ -91,7 +91,7 @@ export default function LoginPage() {
                 required
                 placeholder="Password"
                 autoComplete="current-password"
-                className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none "
               />
             </div>
             <div className="flex items-center justify-between mb-4">
@@ -99,37 +99,28 @@ export default function LoginPage() {
                 <input
                   id="remember"
                   type="checkbox"
-                  className="mr-2 border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                  className="mr-2 dark:bg-gray-700 dark:border-gray-600 "
                 />
                 <label
                   htmlFor="remember"
-                  className="text-sm text-gray-700 dark:text-white"
+                  className="text-sm text-gray-700 "
                 >
                   Remember me
                 </label>
               </div>
               <Link
-                to="#"
-                className="text-sm text-gray-700 dark:text-white hover:underline"
+                to="/register"
+                className="text-sm text-gray-700  hover:underline"
               >
-                Forgot password?
+                New user?
               </Link>
             </div>
             <button
               type="submit"
-              className="w-full px-4 py-2 text-white bg-blue-700 rounded-md hover:bg-blue-600"
+              className="w-full px-4 btn-primary"
             >
               Login
             </button>
-            <p className="mt-4 text-sm text-gray-700 dark:text-white">
-              Not a member?{" "}
-              <Link
-                to="/register"
-                className="font-semibold text-yellow-500 hover:underline"
-              >
-                Sign up now
-              </Link>
-            </p>
           </form>
         </div>
       </div>

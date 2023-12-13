@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getListings, placeBid } from "../../lib/api";
 import { RiAuctionFill } from "react-icons/ri";
 import Skeleton from "../loading-skeleton";
-
+import { Link } from "@tanstack/react-router";
 
 const Card = ({ searchInput }) => {
   const [listings, setListings] = useState([]);
@@ -16,19 +16,18 @@ const Card = ({ searchInput }) => {
     const fetchListings = async () => {
       try {
         const listingsData = await getListings(searchInput);
+        console.log("Listings Data:", listingsData);
         setListings(listingsData);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching listings:', error.message);
-        setError('Failed to fetch listings. Please try again later.');
+        console.error("Error fetching listings:", error.message);
+        setError("Failed to fetch listings. Please try again later.");
         setLoading(false);
       }
     };
 
     fetchListings();
   }, [searchInput]);
-    
-  
 
   const handleBid = async (listingId) => {
     try {
@@ -45,7 +44,6 @@ const Card = ({ searchInput }) => {
         setSelectedItemId(null);
         setIsFinalBid(false);
       } else {
-
         setSelectedItemId(listingId);
         setIsFinalBid(true);
       }
@@ -95,20 +93,26 @@ const Card = ({ searchInput }) => {
               <h2 className="card-title text-xl font-semibold mb-2">
                 {listing.title}
               </h2>
-              <p className="card-text text-gray-700 mb-4" style={{ overflow: 'hidden', maxHeight: '100px' }}>
+              <p
+                className="card-text text-gray-700 mb-4"
+                style={{ overflow: "hidden", maxHeight: "100px" }}
+              >
                 {listing.description}
               </p>
-      
+
               <div className="indicator">
                 <span className="indicator-item badge badge-secondary bg-green-500">
                   {listing._count?.bids || 0}
                 </span>
                 <button className="btn ">Bids</button>
               </div>
-              <div className="digital-clock p-2 rounded">
-                <p className="font-mono text-lg">{listing.endsAt}</p>
-              </div>
               <div className="card-actions flex justify-end mt-4">
+                <Link
+                  to={`/singlelistings/${listing.id}`}
+                  className="btn btn-secondary"
+                >
+                  View Listing
+                </Link>
                 <button
                   onClick={() => handleBid(listing.id)}
                   className="btn btn-primary transform hover:scale-105 transition-transform duration-300"

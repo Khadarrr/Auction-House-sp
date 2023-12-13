@@ -75,27 +75,27 @@ const UserProfile = () => {
                 />
                 <div className="py-2">
                   <h3 className="font-bold text-3xl text-gray-800 mb-2">{profile.name}</h3>
-                  <div className="inline-flex text-gray-700 dark:text-gray-300 items-center text-lg">
+                  <div className="inline-flex text-black items-center text-lg">
                     <CiCreditCard1 /> {profile.credits}
                   </div>
                 </div>
                 <CreateAuction />
               </div>
-              <div className="flex gap-2 px-2 mt-4">
+              <div className="flex justify-between container ">
                 <button
-                  className="flex-1 rounded-full bg-blue-600 dark:bg-blue-800 text-white dark:text-white antialiased font-bold hover:bg-blue-800 dark:hover:bg-blue-900 px-6 py-3 text-xl"
+                  className="btn btn-secondary"
                   onClick={() => setIsEditing(true)}
                 >
                   Edit Avatar
                 </button>
                 <button
-                  className="flex-1 rounded-full bg-green-600 dark:bg-green-800 text-white dark:text-white antialiased font-bold hover:bg-green-800 dark:hover:bg-green-900 px-6 py-3 text-xl"
+                  className="btn btn-secondary"
                   onClick={handleViewListings}
                 >
                   View Listings
                 </button>
                 <button
-                  className="flex-1 rounded-full bg-purple-600 dark:bg-purple-800 text-white dark:text-white antialiased font-bold hover:bg-purple-800 dark:hover:bg-purple-900 px-6 py-3 text-xl"
+                  className="btn btn-secondary"
                   onClick={handleViewBids}
                 >
                   View Bids

@@ -24,7 +24,7 @@ export default function Homepage() {
         <p className="py-6">
               Explore and bid on a variety of items from sellers worldwide. Auction Sphere brings you exciting and diverse bidding experiences. Whether you're a seasoned bidder or new to auctions, discover, bid, and win with us.
             </p>
-            <Link to="/register">
+            <Link to="/login">
           <button className="btn btn-primary">Get Started</button>
           </Link>
           <button className="btn m-2 btn-primary"><CreateAuction/></button>

@@ -48,16 +48,23 @@ export async function registerUser({ name, email, password, avatar }) {
   };
 
   try {
-    const data = await fetcher(apiUrl, options);
+   
+    const registrationData = await fetcher(apiUrl, options);
+    const newAccessToken = registrationData.access_token;
 
-    console.log('Response Status:', data.status);
+  
+    localStorage.setItem("access_token", newAccessToken);
 
-    return data;
+    console.log('Registration Response Status:', registrationData.status);
+
+    
+    return registrationData;
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Registration Error:', error);
     throw new Error('Registration failed. Please check your inputs and try again.');
   }
 }
+
 
 export async function loginUser({ email, password }) {
   const apiUrl = new URL(`${API_URL}/auth/login`);
@@ -113,7 +120,8 @@ export async function getProfile(userName) {
   }
 
   export async function getListings(searchInput) {
-    const apiUrl = `${API_URL}/listings?_tag=${searchInput}&_active=true&sort=created&sortOrder=desc`;
+    const apiUrl = `${API_URL}/listings?_active=true&sort=created&sortOrder=desc`;
+    console.log('API URL:', apiUrl);
     const options = {
       method: 'GET',
       headers: {
@@ -127,7 +135,14 @@ export async function getProfile(userName) {
   
       if (response.ok) {
         const listings = await response.json();
-        return listings;
+  
+        const filteredListings = listings.filter((listing) => {
+          return listing.title
+            .toLowerCase()
+            .includes(searchInput.toLowerCase());
+        });
+  
+        return filteredListings;
       } else {
         throw new Error('Failed to fetch listings. Please try again later.');
       }
@@ -136,6 +151,7 @@ export async function getProfile(userName) {
       throw new Error('Failed to get listings. Please try again later.');
     }
   }
+  
   
 
   export async function placeBid(listingId, amount) {
@@ -263,6 +279,31 @@ export async function getProfile(userName) {
     }
   }
   
+  export async function getListingById(id) {
+    const apiUrl = `${API_URL}/listings/${id}?_seller=true&_bids=true`;
+    console.log('Constructed URL:', apiUrl);
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+      },
+    };
+  
+    try {
+      const response = await fetch(apiUrl, options);
+  
+      if (response.ok) {
+        const listing = await response.json();
+        return listing;
+      } else {
+        throw new Error('Failed to fetch listing. Please try again later.');
+      }
+    } catch (error) {
+      console.error('Error fetching listing:', error);
+      throw new Error('Failed to get listing. Please try again later.');
+    }
+  }
   
   
   

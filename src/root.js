@@ -5,6 +5,7 @@ import LoginPage from "../src/pages/Login";
 import RegisterPage from "../src/pages/Register";
 import ProfilePage from "./pages/Profile";
 import ListingPage from "./pages/Listings";
+import SinglePostPage from "./pages/Singel-Post";
 
 const rootRoute = new RootRoute({
     component: Root,
@@ -40,12 +41,19 @@ const rootRoute = new RootRoute({
     component: ListingPage,
   });
 
+  const singlelistingsRoute = new Route({
+    getParentRoute: () => rootRoute,
+    path: "/singlelistings/$id",
+    component: SinglePostPage,
+  });
+
   const routeTree = rootRoute.addChildren([
     indexRoute,
     loginRoute,
     registerRoute,
     profileRoute,
     listingsRoute,
+    singlelistingsRoute,
 
   ]);
 

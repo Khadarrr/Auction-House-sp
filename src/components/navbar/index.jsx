@@ -5,15 +5,18 @@ import { getProfile } from "../../lib/api";
 import { CiCreditCard1 } from "react-icons/ci";
 import { FaHome } from "react-icons/fa";
 import CreateAuction from "../create-post";
+import PropTypes from "prop-types";
 
-const Navbar = () => {
+const Navbar = ({ setSearchInput }) => {
+  // Remove the searchInput prop
   const userId = localStorage.getItem("user_name");
   const [user, setUser] = useState(null);
   const [creditInfo, setCreditInfo] = useState({});
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState("https://placekitten.com/40/40"); // Placeholder avatar URL
   const navigate = useNavigate();
-  const [searchInput, setSearchInput] = useState("");
+  const [searchInput, setSearchInputLocal] = useState(""); // Use local state
+
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -51,20 +54,23 @@ const Navbar = () => {
 
   return (
     <div className="navbar bg-base-100">
-      <div className="flex-1">
-        <img src={Logo} alt="Icon-logo" className="w-20 h-20 mr-2" />
-        <Link to="/" className="btn btn-ghost items-center text-xl">
-          Auction Sphere
-          <FaHome />
-        </Link>
-      </div>
+      <div className="flex-1 flex items-center">
+  <img src={Logo} alt="Icon-logo" className="w-12 h-12 md:w-20 md:h-20 mr-2" />
+  <Link to="/" className="btn btn-ghost items-center text-sm md:text-xl">
+    Auction Sphere
+    <FaHome className="ml-1" />
+  </Link>
+</div>
       <div className="flex-none">
       <input
           type="text"
           placeholder="Search"
           className="input input-bordered w-24 md:w-auto"
           value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
+          onChange={(e) => {
+            setSearchInputLocal(e.target.value);
+            setSearchInput(e.target.value); 
+          }}
         />
 
         <div className="dropdown dropdown-end">
@@ -93,12 +99,13 @@ const Navbar = () => {
                     {user.credits} Credits
                   </span>
                   <div className="card-actions">
-                    <Link to="/listings"><button className="btn btn-primary btn-block">
-                      Bid to use credit
-                    </button>
+                    <Link to="/listings">
+                      <button className="btn btn-primary btn-block">
+                        Bid to use credit
+                      </button>
                     </Link>
                     <button className="btn btn-secondary">
-                      <CreateAuction/>
+                      <CreateAuction />
                     </button>
                   </div>
                 </>
@@ -149,6 +156,10 @@ const Navbar = () => {
       </div>
     </div>
   );
+};
+
+Navbar.propTypes = {
+  setSearchInput: PropTypes.func.isRequired, 
 };
 
 export default Navbar;
