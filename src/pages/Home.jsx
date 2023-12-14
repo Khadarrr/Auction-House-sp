@@ -6,6 +6,7 @@ import AuctionImage from "../assets/auction.jpeg";
 import { Link } from "@tanstack/react-router";
 import CreateAuction from "../components/create-post";
 import { useState } from "react";
+import Footer from "../components/footer";
 
 
 export default function Homepage() {
@@ -42,7 +43,9 @@ export default function Homepage() {
         </main>
       
       
-    
+    <footer>
+      <Footer/>
+    </footer>
     </>
   );
 }

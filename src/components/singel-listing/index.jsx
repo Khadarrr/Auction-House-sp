@@ -83,29 +83,42 @@ const SingleListing = () => {
           />
         )}
       </figure>
-      <div className="mt-6">
-        <h1 className="text-3xl font-semibold mb-2">{listing.title}</h1>
-        <p className="text-gray-300 mb-4">{listing.description}</p>
-        <div className="mb-4">
-          <strong>Ends At:</strong>
-          <div className="text-3xl font-bold text-green-400">
-            {listing.endsAt}
+      <div className="p-6 bg-center">
+            <h1 className="text-3xl font-semibold mb-4">{listing.title}</h1>
+            <p className="text-gray-700 mb-4">{listing.description}</p>
+            <div className="mb-4">
+              <strong>Ends At:</strong>
+              <div className="text-xl font-bold text-green-500">
+                {listing.endsAt}
+              </div>
+            </div>
+            <div className="mb-4">
+              <strong>Current Bid:</strong>
+              <div className="text-lg font-bold text-blue-500">
+                {listing._count && listing._count.bids > 0
+                  ? `${listing._count.bids} bids - $${listing.bids[0].amount}`
+                  : 'No bids yet'}
+              </div>
+            </div>
+            <div className="mb-4">
+              <strong>Seller:</strong>
+              <div className="flex items-center">
+                {listing.seller && (
+                  <>
+                    <img
+                      src={listing.seller.avatar}
+                      alt="Seller Avatar"
+                      className="w-8 h-8 rounded-full mr-2"
+                    />
+                    <span className="text-gray-700">{listing.seller.name}</span>
+                  </>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="mb-4">
-          <strong>Seller:</strong>
-          <div className="text-gray-400">
-            {listing.seller && (
-              <>
-                <h1>{listing.seller.name}<img src={listing.seller.avatar} alt="Seller Avatar" className="w-12 h-12 rounded-full" /></h1>
-              </>
-            )}
-          </div>
-        </div>
-      </div>
       <div className="details">
         {/* Bid input field */}
-        <div className="bid-input-container mb-4">
+        <div className="bid-input-container text-center mb-4">
           <input
             type="number"
             placeholder="Enter bid amount"
