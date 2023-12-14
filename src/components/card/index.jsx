@@ -106,7 +106,7 @@ const Card = ({ searchInput }) => {
                 </span>
                 <button className="btn ">Bids</button>
               </div>
-              <div className="card-actions flex justify-end mt-4">
+              <div className="card-actions flex justify-between  mt-4">
                 <Link
                   to={`/singlelistings/${listing.id}`}
                   className="btn btn-secondary"

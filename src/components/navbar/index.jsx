@@ -17,7 +17,6 @@ const Navbar = ({ setSearchInput }) => {
   const navigate = useNavigate();
   const [searchInput, setSearchInputLocal] = useState(""); // Use local state
 
-
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
@@ -55,21 +54,25 @@ const Navbar = ({ setSearchInput }) => {
   return (
     <div className="navbar bg-base-100">
       <div className="flex-1 flex items-center">
-  <img src={Logo} alt="Icon-logo" className="w-12 h-12 md:w-20 md:h-20 mr-2" />
-  <Link to="/" className="btn btn-ghost items-center text-sm md:text-xl">
-    Auction Sphere
-    <FaHome className="ml-1" />
-  </Link>
-</div>
+        <img
+          src={Logo}
+          alt="Icon-logo"
+          className="w-12 h-12 md:w-20 md:h-20 mr-2"
+        />
+        <Link to="/" className="btn btn-ghost items-center text-sm md:text-xl">
+          Auction Sphere
+          <FaHome className="ml-1" />
+        </Link>
+      </div>
       <div className="flex-none">
-      <input
+        <input
           type="text"
           placeholder="Search"
           className="input input-bordered w-24 md:w-auto"
           value={searchInput}
           onChange={(e) => {
             setSearchInputLocal(e.target.value);
-            setSearchInput(e.target.value); 
+            setSearchInput(e.target.value);
           }}
         />
 
@@ -159,7 +162,7 @@ const Navbar = ({ setSearchInput }) => {
 };
 
 Navbar.propTypes = {
-  setSearchInput: PropTypes.func.isRequired, 
+  setSearchInput: PropTypes.func.isRequired,
 };
 
 export default Navbar;

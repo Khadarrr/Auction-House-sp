@@ -1,5 +1,5 @@
 import Navbar from "../components/navbar";
-import CreatePost from "../components/create-post";
+import Footer from "../components/footer";
 import UserProfile from "../components/user-profile";
 
 export default function profilePage() {
@@ -8,7 +8,9 @@ export default function profilePage() {
         <nav><Navbar/></nav>
         
         <main><UserProfile/></main>
-        
+         <footer>
+            <Footer/>
+         </footer>
         </>
     )
 }
