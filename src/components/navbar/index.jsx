@@ -6,6 +6,7 @@ import { CiCreditCard1 } from "react-icons/ci";
 import { FaHome } from "react-icons/fa";
 import CreateAuction from "../create-post";
 import PropTypes from "prop-types";
+import "../../index.css";
 
 const Navbar = ({ setSearchInput }) => {
   // Remove the searchInput prop
@@ -76,7 +77,7 @@ const Navbar = ({ setSearchInput }) => {
           }}
         />
 
-        <div className="dropdown dropdown-end">
+<div className="dropdown dropdown-end" style={{ zIndex: 2 }}>
           <label tabIndex={0} className="btn btn-ghost btn-circle">
             <div className="indicator">
               <svg
@@ -103,11 +104,11 @@ const Navbar = ({ setSearchInput }) => {
                   </span>
                   <div className="card-actions">
                     <Link to="/listings">
-                      <button className="btn btn-primary btn-block">
+                      <button className="btn btn-ghost">
                         Bid to use credit
                       </button>
                     </Link>
-                    <button className="btn btn-secondary">
+                    <button>
                       <CreateAuction />
                     </button>
                   </div>
@@ -122,14 +123,14 @@ const Navbar = ({ setSearchInput }) => {
         </div>
 
         {/* Avatar or Placeholder Dropdown */}
-        <div className="dropdown dropdown-end avatar online">
+        <div className="dropdown dropdown-end avatar online" style={{ zIndex: 2 }}>
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
               {isAuthenticated ? (
                 <img alt="User Avatar" src={user.avatar} />
               ) : (
                 // Placeholder avatar when not authenticated
-                <img alt="Placeholder Avatar" src={avatarUrl} />
+                <img alt="Placeholder Avatar offline" src={avatarUrl} />
               )}
             </div>
           </label>

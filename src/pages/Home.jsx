@@ -1,4 +1,4 @@
-import "../App.css";
+import "../index.css";
 import Navbar from "../components/navbar/index";
 import Card from "../components/card";
 import Image from "../assets/H-img.jpg";
@@ -23,37 +23,38 @@ export default function Homepage() {
         <div className="hero-content flex-col lg:flex-row-reverse">
           <img
             src={AuctionImage}
-            className="max-w-sm rounded-lg shadow-2xl"
+            className="max-w-full h-auto lg:max-w-sm lg:h-full rounded-lg shadow-2xl"
+            style={{ objectFit: 'cover' }}
             alt="Background"
           />
           <div>
-            <h1 className="text-5xl  font-bold">Welcome to Auction Sphere!</h1>
+            <h1 className="text-5xl font-bold">Welcome to Auction Sphere!</h1>
             <p className="py-6">
               Explore and bid on a variety of items from sellers worldwide.
               Auction Sphere brings you exciting and diverse bidding
               experiences. Whether you're a seasoned bidder or new to auctions,
               discover, bid, and win with us.
             </p>
-            <Link to="/login">
-              <button className="btn btn-primary">Get Started</button>
-            </Link>
-            <button className="btn m-2 btn-primary">
-              <CreateAuction />
-            </button>
+            <div className="flex justify-start items-center">
+              <Link to="/login">
+                <button className="btn btn-primary">Get Started</button>
+              </Link>
+              <button className="btn m-2 btn-primary">
+                <CreateAuction />
+              </button>
+            </div>
           </div>
         </div>
       </div>
-      <main>
-        <div className=" text-center py-8">
-          <h1 className="text-3xl font-semibold">Recent Auctions</h1>
-        </div>
-        <div className=" container mx-auto mt-8">
+      <main className="text-center py-8">
+        <h1 className="text-3xl font-semibold">Recent Auctions</h1>
+        <div className="container mx-auto mt-8">
           <Card searchInput={searchInput} />
         </div>
       </main>
-      <font>
-        <Footer/>
-      </font>
+      <footer>
+        <Footer />
+      </footer>
     </>
   );
 }
