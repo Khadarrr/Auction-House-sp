@@ -120,7 +120,7 @@ export async function getProfile(userName) {
   }
 
   export async function getListings(searchInput) {
-    const apiUrl = `${API_URL}/listings?_active=true&sort=created&sortOrder=desc`;
+    const apiUrl = `${API_URL}/listings?sort=created&sortOrder=desc`;
     console.log('API URL:', apiUrl);
     const options = {
       method: 'GET',

@@ -108,9 +108,6 @@ const Navbar = ({ setSearchInput }) => {
                         Bid to use credit
                       </button>
                     </Link>
-                    <button>
-                      <CreateAuction />
-                    </button>
                   </div>
                 </>
               ) : (

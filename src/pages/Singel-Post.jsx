@@ -1,5 +1,6 @@
 import SingleListing from "../components/singel-listing";
 import Navbar from "../components/navbar";
+import Footer from "../components/footer";
 
 export default function singlePost() {
   return (
@@ -10,6 +11,9 @@ export default function singlePost() {
       <main>
         <SingleListing />
       </main>
+      <footer>
+        <Footer/>
+      </footer>
     </>
   );
 }

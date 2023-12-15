@@ -10,6 +10,7 @@ const CreateAuction = () => {
     auctionEnds: '',
   });
   const [createdListing, setCreatedListing] = useState(null);
+  const [isSuccess, setIsSuccess] = useState(false); // New state for success message
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -50,12 +51,15 @@ const CreateAuction = () => {
       if (response.ok) {
         const createdListingData = await response.json();
         setCreatedListing(createdListingData);
+        setIsSuccess(true); // Set success status to true
         console.log('Auction listing created successfully!');
       } else {
+        setIsSuccess(false); // Set success status to false in case of failure
         throw new Error('Failed to create auction listing');
       }
     } catch (error) {
       console.error('Error creating auction listing:', error);
+      setIsSuccess(false); // Set success status to false in case of error
       if (error.response) {
         console.error('Server responded with status:', error.response.status);
         console.error('Response data:', error.response.data);
@@ -123,6 +127,11 @@ const CreateAuction = () => {
       <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <h2 className="text-3xl font-semibold mb-6">Create Auction</h2>
+          {isSuccess && (
+            <div className="text-green-500 font-semibold mb-4">
+              Auction listing created successfully!
+            </div>
+          )}
           <form onSubmit={handleOnSubmit}>
             <input
               type="text"

@@ -1,24 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { getUserProfile, updateUserAvatar, getUserListings, getUserBids } from '../../lib/api';
-import CreateAuction from '../create-post';
+import React, { useState, useEffect } from "react";
+import {
+  getUserProfile,
+  updateUserAvatar,
+  getUserListings,
+  getUserBids,
+} from "../../lib/api";
+import CreateAuction from "../create-post";
 import { CiCreditCard1 } from "react-icons/ci";
+import { Link } from "@tanstack/react-router";
 
 const UserProfile = () => {
   const [profile, setProfile] = useState(null);
   const [listings, setListings] = useState(null);
   const [bids, setBids] = useState(null);
-  const [newAvatar, setNewAvatar] = useState('');
+  const [newAvatar, setNewAvatar] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const userName = localStorage.getItem('user_name');
+        const userName = localStorage.getItem("user_name");
         const userProfile = await getUserProfile(userName);
         setProfile(userProfile);
       } catch (error) {
-        console.error('Error fetching user profile:', error.message);
+        console.error("Error fetching user profile:", error.message);
       }
     };
 
@@ -31,7 +37,7 @@ const UserProfile = () => {
       setProfile(updatedProfile);
       setIsEditing(false);
     } catch (error) {
-      setError('Error updating avatar. Please try again.');
+      setError("Error updating avatar. Please try again.");
     }
   };
 
@@ -42,7 +48,7 @@ const UserProfile = () => {
       // Reset bids when viewing listings
       setBids(null);
     } catch (error) {
-      setError('Error fetching user listings. Please try again.');
+      setError("Error fetching user listings. Please try again.");
     }
   };
 
@@ -53,7 +59,7 @@ const UserProfile = () => {
       // Reset listings when viewing bids
       setListings(null);
     } catch (error) {
-      setError('Error fetching user bids. Please try again.');
+      setError("Error fetching user bids. Please try again.");
     }
   };
 
@@ -64,7 +70,7 @@ const UserProfile = () => {
   return (
     <div className="card glass flex items-center justify-center min-h-screen">
       <div className="card glass p-6 max-w-3xl w-full bg-cover bg-center rounded-lg overflow-hidden shadow-lg">
-        {profile && (
+        {profile ? (
           <div className="card glass p-6 rounded-lg">
             <div className="border-b px-4 pb-6">
               <div className="text-center my-4">
@@ -74,7 +80,9 @@ const UserProfile = () => {
                   alt="User Avatar"
                 />
                 <div className="py-2">
-                  <h3 className="font-bold text-3xl text-gray-800 mb-2">{profile.name}</h3>
+                  <h3 className="font-bold text-3xl text-gray-800 mb-2">
+                    {profile.name}
+                  </h3>
                   <div className="inline-flex text-black items-center text-lg">
                     <CiCreditCard1 /> {profile.credits}
                   </div>
@@ -94,10 +102,7 @@ const UserProfile = () => {
                 >
                   View Listings
                 </button>
-                <button
-                  className="btn btn-secondary"
-                  onClick={handleViewBids}
-                >
+                <button className="btn btn-secondary" onClick={handleViewBids}>
                   View Bids
                 </button>
               </div>
@@ -138,7 +143,12 @@ const UserProfile = () => {
                       <p className="font-bold text-lg">{listing.title}</p>
                       {Array.isArray(listing.media) &&
                         listing.media.map((mediaUrl) => (
-                          <img key={mediaUrl} src={mediaUrl} alt="user's listing media" className="mt-2" />
+                          <img
+                            key={mediaUrl}
+                            src={mediaUrl}
+                            alt="user's listing media"
+                            className="mt-2"
+                          />
                         ))}
                       <p className="text-gray-700">{listing.description}</p>
                     </div>
@@ -168,7 +178,15 @@ const UserProfile = () => {
             )}
 
             {error && <p className="text-red-500 mt-4">{error}</p>}
-            
+          </div>
+        ) : (
+          <div className="text-center">
+            <p className="text-xl font-bold mb-4">
+              Please log in to view the profile page.
+            </p>
+            <Link to="/login" className="btn btn-primary">
+              Log In
+            </Link>
           </div>
         )}
       </div>
