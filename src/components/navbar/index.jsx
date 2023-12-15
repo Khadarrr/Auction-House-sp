@@ -4,7 +4,6 @@ import Logo from "../../assets/icon-auction.png";
 import { getProfile } from "../../lib/api";
 import { CiCreditCard1 } from "react-icons/ci";
 import { FaHome } from "react-icons/fa";
-import CreateAuction from "../create-post";
 import PropTypes from "prop-types";
 import "../../index.css";
 
