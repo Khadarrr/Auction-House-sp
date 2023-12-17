@@ -8,11 +8,7 @@ const SingleListing = () => {
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [bidAmount, setBidAmount] = useState('');
-  const [bidLoading, setBidLoading] = useState(false);
-  const [bidError, setBidError] = useState(null);
-  const [isFinalBid, setIsFinalBid] = useState(false);
-
+ 
   useEffect(() => {
     const fetchListing = async () => {
       try {
@@ -30,37 +26,6 @@ const SingleListing = () => {
     fetchListing();
   }, [id]);
   
-
-  const handlePlaceBid = async () => {
-    try {
-      setBidLoading(true);
-      setBidError(null);
-  
-      // Validate bid amount
-      if (!bidAmount || isNaN(bidAmount) || parseFloat(bidAmount) <= 0) {
-        setBidError('Please enter a valid bid amount.');
-        setBidLoading(false);
-        return;
-      }
-  
-      // Place bid
-      const bidResponse = await placeBid(id, parseFloat(bidAmount)); // Parse bid amount as a float
-  
-      // Check bid response
-      if (bidResponse.success) {
-        // Bid placed successfully, update listing data
-        const updatedListing = await getListingById(id);
-        setListing(updatedListing);
-      } else {
-        setBidError('Failed to place bid. Please try again later.');
-      }
-    } catch (error) {
-      console.error('Error placing bid:', error.message);
-      setBidError('Failed to place bid. Please try again later.');
-    } finally {
-      setBidLoading(false);
-    }
-  };
   
 
   if (loading) {
@@ -116,36 +81,6 @@ const SingleListing = () => {
               </div>
             </div>
           </div>
-      <div className="details">
-        {/* Bid input field */}
-        <div className="bid-input-container text-center mb-4">
-          <input
-            type="number"
-            placeholder="Enter bid amount"
-            value={bidAmount}
-            onChange={(e) => setBidAmount(e.target.value)}
-            className="input input-bordered w-full max-w-xs"
-          />
-          <button
-            onClick={() => handlePlaceBid()}
-            className="btn btn-primary mt-2"
-            disabled={bidLoading}
-          >
-            {bidLoading ? 'Placing Bid...' : 'Place Bid'}
-          </button>
-          {isFinalBid && (
-            <button
-              onClick={() => handlePlaceBid()}
-              className="btn btn-ghost mt-2"
-            >
-              <RiAuctionFill /> Final Bid
-            </button>
-          )}
-        </div>
-
-        {/* Display bid error, if any */}
-        {bidError && <div className="text-red-500">{bidError}</div>}
-      </div>
     </div>
   </div>
   );
