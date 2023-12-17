@@ -2,7 +2,15 @@ import { useState } from "react";
 import { useNavigate, Link } from "@tanstack/react-router";
 import { registerUser } from "../../lib/api";
 
-const Input = ({ type, placeholder, value, onChange, name, isValid, errorMessage }) => (
+const Input = ({
+  type,
+  placeholder,
+  value,
+  onChange,
+  name,
+  isValid,
+  errorMessage,
+}) => (
   <div className="relative">
     <input
       type={type}
@@ -13,10 +21,14 @@ const Input = ({ type, placeholder, value, onChange, name, isValid, errorMessage
       required={true}
       minLength={4}
       aria-label={placeholder}
-      className={`bg-neutral-100 border-2 ${isValid ? 'border-orange-100' : 'border-red-500'} text-gray-900 leading-tight tracking-tight sm:text-sm rounded-3xl focus:ring-primary-600 focus:border-primary-600 block w-full min-w-[220px] sm:min-w-[300px] p-2.5 `}
+      className={`bg-neutral-100 border-2 ${
+        isValid ? "border-orange-100" : "border-red-500"
+      } text-gray-900 leading-tight tracking-tight sm:text-sm rounded-3xl focus:ring-primary-600 focus:border-primary-600 block w-full min-w-[220px] sm:min-w-[300px] p-2.5 `}
     />
     {!isValid && errorMessage && (
-      <p className="absolute top-full left-0 text-red-500 text-xs mt-1">{errorMessage}</p>
+      <p className="absolute top-full left-0 text-red-500 text-xs mt-1">
+        {errorMessage}
+      </p>
     )}
   </div>
 );
@@ -56,7 +68,10 @@ const SignUpForm = () => {
       return false;
     }
 
-    if (currentStep === 1 && (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) {
+    if (
+      currentStep === 1 &&
+      (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+    ) {
       setInputValidities((prev) => ({ ...prev, email: false }));
       return false;
     }
@@ -82,6 +97,7 @@ const SignUpForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("hello");
 
     const { username, email, password, confirmPassword, avatar } = formData;
 
@@ -95,7 +111,7 @@ const SignUpForm = () => {
             confirmPassword,
             avatar,
           });
-
+          console.log(data);
           localStorage.setItem("access_token", data.accessToken);
           localStorage.setItem("user_email", data.email);
 
@@ -150,7 +166,9 @@ const SignUpForm = () => {
                 isValid={inputValidities[fieldName]}
                 errorMessage={
                   !inputValidities[fieldName] &&
-                  `${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)} is invalid`
+                  `${
+                    fieldName.charAt(0).toUpperCase() + fieldName.slice(1)
+                  } is invalid`
                 }
               />
             ))}
@@ -187,9 +205,11 @@ const SignUpForm = () => {
               {steps.map((step, index) => (
                 <li
                   key={index}
-                  className={`step ${index === currentStep ? "step-info" : ""} ${
-                    index < currentStep ? "step-success" : ""
-                  } ${index > currentStep ? "step-pending" : ""}`}
+                  className={`step ${
+                    index === currentStep ? "step-info" : ""
+                  } ${index < currentStep ? "step-success" : ""} ${
+                    index > currentStep ? "step-pending" : ""
+                  }`}
                 >
                   {step.label}
                 </li>
